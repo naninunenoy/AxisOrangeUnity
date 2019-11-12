@@ -1,0 +1,15 @@
+{
+    "name": "AxisOrangeExample",
+    "references": [
+        "GUID:918dc53cfbfd714429f66062b47c2a02"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}
