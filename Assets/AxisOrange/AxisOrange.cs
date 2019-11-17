@@ -6,14 +6,14 @@ using UnityEngine;
 
 namespace AxisOrange {
     public class AxisOrange : MonoBehaviour {
-        const int ReadDataLength = 44;
+        const int ReadHeaderLength = 4;
         public event Action<AxisOrangeData> DataReceived = delegate { };
 
         [SerializeField] int portNo = 7;
         [SerializeField] int boudRate = 115200;
 
         SerialPort axisOrangeSerial = default;
-        readonly byte[] readDataBuffer = new byte[ReadDataLength];
+        readonly byte[] readHeaderBuffer = new byte[ReadHeaderLength];
 
         void Awake() {
             try {
@@ -35,15 +35,40 @@ namespace AxisOrange {
             if (axisOrangeSerial == null) {
                 return;
             }
-            var len = axisOrangeSerial.Read(readDataBuffer, 0, ReadDataLength);
-            if (len == ReadDataLength) {
-                var t = readDataBuffer.ToLong(0);
-                var acc = readDataBuffer.ToVector3(4);
-                var gyro = readDataBuffer.ToVector3(16);
-                var quat = readDataBuffer.ToQuaternion(28);
-                var data = new AxisOrangeData(t, acc, gyro, quat);
-                DataReceived.Invoke(data);
+            // header
+            if (axisOrangeSerial.Read(readHeaderBuffer, 0, ReadHeaderLength) != ReadHeaderLength) {
+                return;
             }
+            // data
+            var type = readHeaderBuffer.ToUShort(0);
+            var len = readHeaderBuffer.ToUShort(2);
+            var dataBuffer = new byte[len];
+            if (axisOrangeSerial.Read(dataBuffer, 0, len) != len) {
+                return;
+            }
+            // extract
+            switch (type) {
+            case 1:
+                InvokeImuData(dataBuffer);
+                break;
+            case 2:
+                InvokeButtonData(dataBuffer);
+                break;
+            }
+        }
+
+        void InvokeImuData(byte[] data) {
+            var t = data.ToUInt(0);
+            var acc = data.ToVector3(4);
+            var gyro = data.ToVector3(16);
+            var quat = data.ToQuaternion(28);
+            DataReceived.Invoke(new AxisOrangeData(t, acc, gyro, quat));
+        }
+
+        void InvokeButtonData(byte[] data) {
+            var t = data.ToUInt(0);
+            Debug.LogFormat("{0} 0x{1:X}", t, data[4]);
+            //DataReceived.Invoke(new AxisOrangeData(t, acc, gyro, quat));
         }
 
         void OnDestroy() {
@@ -56,7 +81,13 @@ namespace AxisOrange {
     }
 
     public static class ByteArrayConvertEx {
-        public static long ToLong(this byte[] byteArray, int offset) {
+        public static ushort ToUShort(this byte[] byteArray, int offset) {
+            if (byteArray == null) {
+                return 0;
+            }
+            return BitConverter.ToUInt16(byteArray, offset);
+        }
+        public static uint ToUInt(this byte[] byteArray, int offset) {
             if (byteArray == null) {
                 return 0;
             }
