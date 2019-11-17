@@ -14,12 +14,14 @@ namespace AxisOrangeExample {
             axisOrange = GetComponent<AxisOrange.AxisOrange>();
             if (axisOrange != null) {
                 axisOrange.DataReceived += UpdateQuaternion;
+                axisOrange.ButtonUpdated += UpdateButton;
             }
         }
 
         void OnDestroy() {
             if (axisOrange != null) {
                 axisOrange.DataReceived -= UpdateQuaternion;
+                axisOrange.ButtonUpdated -= UpdateButton;
             }
         }
 
@@ -29,6 +31,10 @@ namespace AxisOrangeExample {
                 baseQuaternion = quat;
             }
             transform.rotation = Quaternion.Inverse(baseQuaternion) * quat;
+        }
+
+        void UpdateButton(AxisOrangeButton button) {
+            Debug.Log($"{button.timestamp} {button.buttonA} {button.buttonB}");
         }
     }
 }

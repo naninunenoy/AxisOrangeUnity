@@ -8,6 +8,7 @@ namespace AxisOrange {
     public class AxisOrange : MonoBehaviour {
         const int ReadHeaderLength = 4;
         public event Action<AxisOrangeData> DataReceived = delegate { };
+        public event Action<AxisOrangeButton> ButtonUpdated = delegate { };
 
         [SerializeField] int portNo = 7;
         [SerializeField] int boudRate = 115200;
@@ -67,8 +68,7 @@ namespace AxisOrange {
 
         void InvokeButtonData(byte[] data) {
             var t = data.ToUInt(0);
-            Debug.LogFormat("{0} 0x{1:X}", t, data[4]);
-            //DataReceived.Invoke(new AxisOrangeData(t, acc, gyro, quat));
+            ButtonUpdated.Invoke(new AxisOrangeButton(t, data[4]));
         }
 
         void OnDestroy() {
