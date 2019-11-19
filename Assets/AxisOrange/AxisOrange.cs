@@ -79,38 +79,4 @@ namespace AxisOrange {
             }
         }
     }
-
-    public static class ByteArrayConvertEx {
-        public static ushort ToUShort(this byte[] byteArray, int offset) {
-            if (byteArray == null) {
-                return 0;
-            }
-            return BitConverter.ToUInt16(byteArray, offset);
-        }
-        public static uint ToUInt(this byte[] byteArray, int offset) {
-            if (byteArray == null) {
-                return 0;
-            }
-            return BitConverter.ToUInt32(byteArray, offset);
-        }
-        public static Vector3 ToVector3(this byte[] byteArray, int offset) {
-            if (byteArray == null) {
-                return Vector3.zero;
-            }
-            var x = BitConverter.ToSingle(byteArray, offset);
-            var y = BitConverter.ToSingle(byteArray, offset + 4);
-            var z = BitConverter.ToSingle(byteArray, offset + 8);
-            return new Vector3(x, y, z);
-        }
-        public static Quaternion ToQuaternion(this byte[] byteArray, int offset) {
-            if (byteArray == null) {
-                return Quaternion.identity;
-            }
-            var w = BitConverter.ToSingle(byteArray, offset);
-            var x = BitConverter.ToSingle(byteArray, offset + 4);
-            var y = BitConverter.ToSingle(byteArray, offset + 8);
-            var z = BitConverter.ToSingle(byteArray, offset + 12);
-            return new Quaternion(x, y, z, w).normalized;
-        }
-    }
 }
