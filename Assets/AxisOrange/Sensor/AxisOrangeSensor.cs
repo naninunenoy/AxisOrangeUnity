@@ -23,11 +23,11 @@ namespace AxisOrange {
         }
 
         public void Dispose() {
+            isListening = false;
             serialDevice.Dispose();
         }
 
         public void Open() {
-            if (serialDevice == null) return;
             try {
                 serialDevice.Open();
             } catch (Exception e) {
@@ -45,7 +45,7 @@ namespace AxisOrange {
         public void Listen() {
             isListening = true;
             Task.Run(() => {
-                SerialRecieveLoop(serialDevice);
+                SerialRecieveLoop();
             });
         }
 
@@ -53,29 +53,28 @@ namespace AxisOrange {
             isListening = false;
         }
 
-        async void SerialRecieveLoop(SerialPort serial) {
+        async void SerialRecieveLoop() {
             SerialHeader header = default;
             AxisOrangeData data = default;
             AxisOrangeButton button = default;
             while (serialDevice.IsNotNullAndOpened()) {
                 // serial read
-                if (serialReader.TryReadSerialHeader(serial, ref header)) {
-                    switch (header.dataId) {
-                    case ImuDataId:
-                        if (serialReader.TryReadImuData(serial, header.dataLength, ref data)) {
+                if (serialReader.TryReadSerialHeader(serialDevice, ref header)) {
+                    if (header.dataId == ImuDataId) {
+                        if (serialReader.TryReadImuData(serialDevice, header.dataLength, ref data)) {
                             OnSensorDataUpdate.Invoke(data);
                         }
-                        break;
-                    case ButtonDataId:
-                        if (serialReader.TryReadButtonData(serial, header.dataLength, ref button)) {
+                    } else if (header.dataId == ButtonDataId) {
+                        if (serialReader.TryReadButtonData(serialDevice, header.dataLength, ref button)) {
                             OnSensorButtonUpdate.Invoke(button);
                         }
-                        break;
+                    } else {
+                        // Do Nothing
                     }
                 }
                 // finish loop?
                 if (isListening) {
-                    await Task.Delay(1);
+                    await Task.Delay(100);
                 } else {
                     break;
                 }

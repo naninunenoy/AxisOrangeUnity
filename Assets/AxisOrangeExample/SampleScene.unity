@@ -120,6 +120,51 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &253725126
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 253725127}
+  - component: {fileID: 253725128}
+  m_Layer: 0
+  m_Name: AxisOrangeExample
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &253725127
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253725126}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.032362856, y: 0.043919552, z: -0.03467205}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &253725128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253725126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3f8b61bf431d204eaf5319583fc374e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serialPortNo: 7
+  m5stickC: {fileID: 5754717501493117156}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -361,5 +406,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5754717500159381992, guid: af9a202c01eb54f4b82c5d2db53de9b5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: af9a202c01eb54f4b82c5d2db53de9b5, type: 3}
+--- !u!4 &5754717501493117156 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5754717500159381993, guid: af9a202c01eb54f4b82c5d2db53de9b5,
+    type: 3}
+  m_PrefabInstance: {fileID: 5754717501493117155}
+  m_PrefabAsset: {fileID: 0}

@@ -5,23 +5,32 @@ using AxisOrange;
 
 namespace AxisOrangeExample {
     public class AxisOrangeExample : MonoBehaviour {
+        [SerializeField] int serialPortNo = 0;
+        [SerializeField] Transform m5stickC = default;
 
-        AxisOrange.AxisOrange axisOrange;
+        INotifySensor sensor;
         Quaternion baseQuaternion = Quaternion.identity;
 
-        // Start is called before the first frame update
+        void Awake() {
+            sensor = new AxisOrangeSensor(serialPortNo);
+        }
+
         void Start() {
-            axisOrange = GetComponent<AxisOrange.AxisOrange>();
-            if (axisOrange != null) {
-                axisOrange.DataReceived += UpdateQuaternion;
-                axisOrange.ButtonUpdated += UpdateButton;
+            if (sensor != null) {
+                sensor.Open();
+                sensor.Listen();
+                sensor.OnSensorDataUpdate += UpdateQuaternion;
+                sensor.OnSensorButtonUpdate += UpdateButton;
             }
         }
 
         void OnDestroy() {
-            if (axisOrange != null) {
-                axisOrange.DataReceived -= UpdateQuaternion;
-                axisOrange.ButtonUpdated -= UpdateButton;
+            if (sensor != null) {
+                sensor.OnSensorDataUpdate -= UpdateQuaternion;
+                sensor.OnSensorButtonUpdate -= UpdateButton;
+                sensor.Unlisten();
+                sensor.Close();
+                sensor.Dispose();
             }
         }
 
@@ -34,7 +43,9 @@ namespace AxisOrangeExample {
         }
 
         void UpdateButton(AxisOrangeButton button) {
-            Debug.Log($"{button.timestamp} {button.buttonA} {button.buttonB}");
+            if (button.buttonA == ButtonState.Push) {
+                baseQuaternion = Quaternion.identity;
+            }
         }
     }
 }
