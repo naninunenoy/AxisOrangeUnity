@@ -74,7 +74,7 @@ namespace AxisOrange {
                 }
                 // finish loop?
                 if (isListening) {
-                    await Task.Delay(100);
+                    await Task.Delay(1);
                 } else {
                     break;
                 }

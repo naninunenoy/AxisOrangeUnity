@@ -39,7 +39,7 @@ namespace AxisOrangeExample {
             if (baseQuaternion == Quaternion.identity) {
                 baseQuaternion = quat;
             }
-            transform.rotation = Quaternion.Inverse(baseQuaternion) * quat;
+            m5stickC.rotation = Quaternion.Inverse(baseQuaternion) * quat;
         }
 
         void UpdateButton(AxisOrangeButton button) {
