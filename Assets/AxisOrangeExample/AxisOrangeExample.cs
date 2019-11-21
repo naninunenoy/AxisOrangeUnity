@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using AxisOrange;
 
@@ -10,12 +11,14 @@ namespace AxisOrangeExample {
 
         INotifySensor sensor;
         Quaternion baseQuaternion = Quaternion.identity;
+        SynchronizationContext context;
 
         void Awake() {
             sensor = new AxisOrangeSensor(serialPortNo);
         }
 
         void Start() {
+            context = SynchronizationContext.Current;
             if (sensor != null) {
                 sensor.Open();
                 sensor.Listen();
@@ -39,7 +42,10 @@ namespace AxisOrangeExample {
             if (baseQuaternion == Quaternion.identity) {
                 baseQuaternion = quat;
             }
-            m5stickC.rotation = Quaternion.Inverse(baseQuaternion) * quat;
+            // メインスレッドで実行しないと反映されない
+            context?.Post(_ => {
+                m5stickC.rotation = Quaternion.Inverse(baseQuaternion) * quat;
+            }, null);
         }
 
         void UpdateButton(AxisOrangeButton button) {
