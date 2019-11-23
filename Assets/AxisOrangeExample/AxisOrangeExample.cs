@@ -41,11 +41,11 @@ namespace AxisOrangeExample {
         void UpdateQuaternion(AxisOrangeData data) {
             var quat = data.ToUnityAxis().quaternion;
             if (baseQuaternion == Quaternion.identity) {
-                baseQuaternion = quat;
+                //baseQuaternion = quat;
             }
             // メインスレッドで実行しないと反映されない
             context?.Post(_ => {
-                m5stickC.rotation = Quaternion.Inverse(baseQuaternion) * quat;
+                //m5stickC.rotation = Quaternion.Inverse(baseQuaternion) * quat;
             }, null);
         }
 

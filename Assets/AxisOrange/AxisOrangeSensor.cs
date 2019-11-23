@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.IO.Ports;
-using UnityEngine;
 
 namespace AxisOrange {
     public class AxisOrangeSensor : IAxisOrangeSensor {
@@ -29,7 +28,6 @@ namespace AxisOrange {
             try {
                 serialDevice.Open();
             } catch (Exception e) {
-                Debug.LogError($"cannot open serial port {portNo} {e.Message}");
                 throw e;
             }
         }

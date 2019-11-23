@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO.Ports;
-using UnityEngine;
 
 namespace AxisOrange {
     internal class SerialReader {
@@ -59,24 +58,24 @@ namespace AxisOrange {
             }
             return BitConverter.ToUInt32(byteArray, offset);
         }
-        public static Vector3 ToVector3(this byte[] byteArray, int offset) {
+        public static float[] ToVector3(this byte[] byteArray, int offset) {
             if (byteArray == null) {
-                return Vector3.zero;
+                return new float[] { 0.0F, 0.0F, 0.0F };
             }
             var x = BitConverter.ToSingle(byteArray, offset);
             var y = BitConverter.ToSingle(byteArray, offset + 4);
             var z = BitConverter.ToSingle(byteArray, offset + 8);
-            return new Vector3(x, y, z);
+            return new float[] { x, y, z };
         }
-        public static Quaternion ToQuaternion(this byte[] byteArray, int offset) {
+        public static float[] ToQuaternion(this byte[] byteArray, int offset) {
             if (byteArray == null) {
-                return Quaternion.identity;
+                return new float[] { 1.0F, 0.0F, 0.0F, 0.0F };
             }
             var w = BitConverter.ToSingle(byteArray, offset);
             var x = BitConverter.ToSingle(byteArray, offset + 4);
             var y = BitConverter.ToSingle(byteArray, offset + 8);
             var z = BitConverter.ToSingle(byteArray, offset + 12);
-            return new Quaternion(x, y, z, w).normalized;
+            return new float[] { w, x, y, z };
         }
     }
 }

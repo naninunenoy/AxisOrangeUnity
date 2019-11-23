@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace AxisOrange {
+﻿namespace AxisOrange {
     public enum ButtonState { Release, Push }
     public readonly struct AxisOrangeButton {
         public readonly uint timestamp;

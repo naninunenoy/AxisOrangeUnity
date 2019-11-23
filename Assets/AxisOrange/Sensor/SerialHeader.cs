@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace AxisOrange {
+﻿namespace AxisOrange {
     internal static class SerialHeaderDef {
         public const int HeaderLength = 4;
         public const int ImuDataId = 1;
