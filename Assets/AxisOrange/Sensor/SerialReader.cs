@@ -8,8 +8,8 @@ namespace AxisOrange {
             if (!serial.IsNotNullAndOpened()) {
                 return false;
             }
-            var buf = new byte[SerialHeader.HeaderLength];
-            if (serial.Read(buf, 0, SerialHeader.HeaderLength) != SerialHeader.HeaderLength) {
+            var buf = new byte[SerialHeaderDef.HeaderLength];
+            if (serial.Read(buf, 0, SerialHeaderDef.HeaderLength) != SerialHeaderDef.HeaderLength) {
                 return false;
             }
             header = new SerialHeader(buf);

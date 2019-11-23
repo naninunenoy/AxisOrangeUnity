@@ -4,9 +4,7 @@ using System.IO.Ports;
 using UnityEngine;
 
 namespace AxisOrange {
-    public class AxisOrangeSensor : INotifySensor, IRequest {
-        const int ImuDataId = 1;
-        const int ButtonDataId = 2;
+    public class AxisOrangeSensor : IAxisOrangeSensor {
 
         const int BoudRate = 115200;
         readonly string portNo;
@@ -60,11 +58,11 @@ namespace AxisOrange {
             while (serialDevice.IsNotNullAndOpened()) {
                 // serial read
                 if (serialReader.TryReadSerialHeader(serialDevice, ref header)) {
-                    if (header.dataId == ImuDataId) {
+                    if (header.dataId == SerialHeaderDef.ImuDataId) {
                         if (serialReader.TryReadImuData(serialDevice, header.dataLength, ref data)) {
                             OnSensorDataUpdate.Invoke(data);
                         }
-                    } else if (header.dataId == ButtonDataId) {
+                    } else if (header.dataId == SerialHeaderDef.ButtonDataId) {
                         if (serialReader.TryReadButtonData(serialDevice, header.dataLength, ref button)) {
                             OnSensorButtonUpdate.Invoke(button);
                         }
@@ -81,7 +79,7 @@ namespace AxisOrange {
             }
         }
         public void RequestInstallGyroOfset() {
-            serialDevice.Write(RequestId.InstallGyroOffset.ToRequestSerialHeaderBytes(), 0, SerialHeader.HeaderLength);
+            serialDevice.Write(RequestId.InstallGyroOffset.ToRequestSerialHeaderBytes(), 0, SerialHeaderDef.HeaderLength);
         }
     }
 

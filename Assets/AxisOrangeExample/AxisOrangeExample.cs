@@ -10,7 +10,7 @@ namespace AxisOrangeExample {
         [SerializeField] int serialPortNo = 0;
         [SerializeField] Transform m5stickC = default;
 
-        AxisOrangeSensor sensor;
+        IAxisOrangeSensor sensor;
         Quaternion baseQuaternion = Quaternion.identity;
         SynchronizationContext context;
 
