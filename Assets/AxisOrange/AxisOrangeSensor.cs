@@ -9,7 +9,7 @@ namespace AxisOrange {
         readonly string portNo;
         readonly SerialPort serialDevice;
         readonly SerialReader serialReader;
-        public event Action<AxisOrangeRawData> OnSensorDataUpdate = delegate { };
+        public event Action<AxisOrangeDataData> OnSensorDataUpdate = delegate { };
         public event Action<AxisOrangeButton> OnSensorButtonUpdate = delegate { };
         bool isListening = false;
 
@@ -51,7 +51,7 @@ namespace AxisOrange {
 
         async void SerialRecieveLoop() {
             SerialHeader header = default;
-            AxisOrangeRawData data = default;
+            AxisOrangeDataData data = default;
             AxisOrangeButton button = default;
             while (serialDevice.IsNotNullAndOpened()) {
                 // serial read
