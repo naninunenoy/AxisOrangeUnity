@@ -4,13 +4,12 @@ using UnityEngine;
 
 namespace AxisOrange {
     internal class SerialReader {
-        const int HeaderLength = 4;
         public bool TryReadSerialHeader(SerialPort serial, ref SerialHeader header) {
             if (!serial.IsNotNullAndOpened()) {
                 return false;
             }
-            var buf = new byte[HeaderLength];
-            if (serial.Read(buf, 0, HeaderLength) != HeaderLength) {
+            var buf = new byte[SerialHeader.HeaderLength];
+            if (serial.Read(buf, 0, SerialHeader.HeaderLength) != SerialHeader.HeaderLength) {
                 return false;
             }
             header = new SerialHeader(buf);
@@ -44,15 +43,6 @@ namespace AxisOrange {
             var t = buf.ToUInt(0);
             data = new AxisOrangeButton(t, buf[4]);
             return true;
-        }
-    }
-
-    internal readonly struct SerialHeader {
-        public readonly int dataId;
-        public readonly int dataLength;
-        public SerialHeader(byte[] header) {
-            dataId = header.ToUShort(0);
-            dataLength = header.ToUShort(2);
         }
     }
 

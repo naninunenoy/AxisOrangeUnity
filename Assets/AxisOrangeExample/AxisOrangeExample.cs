@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.UI;
 using AxisOrange;
 
 namespace AxisOrangeExample {
@@ -9,7 +10,7 @@ namespace AxisOrangeExample {
         [SerializeField] int serialPortNo = 0;
         [SerializeField] Transform m5stickC = default;
 
-        INotifySensor sensor;
+        AxisOrangeSensor sensor;
         Quaternion baseQuaternion = Quaternion.identity;
         SynchronizationContext context;
 
@@ -52,6 +53,10 @@ namespace AxisOrangeExample {
             if (button.buttonA == ButtonState.Push) {
                 baseQuaternion = Quaternion.identity;
             }
+        }
+
+        public void OnClickButton() {
+            sensor?.RequestInstallGyroOfset();
         }
     }
 }

@@ -4,7 +4,7 @@ using System.IO.Ports;
 using UnityEngine;
 
 namespace AxisOrange {
-    public class AxisOrangeSensor : INotifySensor {
+    public class AxisOrangeSensor : INotifySensor, IRequest {
         const int ImuDataId = 1;
         const int ButtonDataId = 2;
 
@@ -79,6 +79,9 @@ namespace AxisOrange {
                     break;
                 }
             }
+        }
+        public void RequestInstallGyroOfset() {
+            serialDevice.Write(RequestId.InstallGyroOffset.ToRequestSerialHeaderBytes(), 0, SerialHeader.HeaderLength);
         }
     }
 
