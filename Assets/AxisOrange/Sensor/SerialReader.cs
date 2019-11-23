@@ -15,7 +15,7 @@ namespace AxisOrange {
             return true;
         }
 
-        public bool TryReadImuData(SerialPort serial, int dataLength, ref AxisOrangeData data) {
+        public bool TryReadImuData(SerialPort serial, int dataLength, ref AxisOrangeRawData data) {
             if (!serial.IsNotNullAndOpened()) {
                 return false;
             }
@@ -27,7 +27,7 @@ namespace AxisOrange {
             var acc = buf.ToVector3(4);
             var gyro = buf.ToVector3(16);
             var quat = buf.ToQuaternion(28);
-            data = new AxisOrangeData(t, acc, gyro, quat);
+            data = new AxisOrangeRawData(t, acc, gyro, quat);
             return true;
         }
 

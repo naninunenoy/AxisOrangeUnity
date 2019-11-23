@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace AxisOrange {
     public static class AxisOrangeDataToUnity {
-        public static AxisOrangeData ToUnityAxis(this AxisOrangeData raw) {
-            return new AxisOrangeData(
+        public static AxisOrangeRawData ToUnityAxis(this AxisOrangeRawData raw) {
+            return new AxisOrangeRawData(
                 //raw.timestamp,
                 //new Vector3(raw.acc, raw.acc.z, raw.acc.y),
                 //new Vector3(raw.gyro.x, raw.gyro.z, raw.gyro.y),
