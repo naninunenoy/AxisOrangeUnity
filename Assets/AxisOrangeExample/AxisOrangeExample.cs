@@ -39,13 +39,13 @@ namespace AxisOrangeExample {
         }
 
         void UpdateQuaternion(AxisOrangeRawData data) {
-            var quat = data.ToUnityAxis().quaternion;
+            var unityData = new AxisOrangeData(data);
             if (baseQuaternion == Quaternion.identity) {
-                //baseQuaternion = quat;
+                baseQuaternion = unityData.quaternion;
             }
             // メインスレッドで実行しないと反映されない
             context?.Post(_ => {
-                //m5stickC.rotation = Quaternion.Inverse(baseQuaternion) * quat;
+                m5stickC.rotation = Quaternion.Inverse(baseQuaternion) * unityData.quaternion;
             }, null);
         }
 
