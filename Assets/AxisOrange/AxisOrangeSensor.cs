@@ -49,7 +49,7 @@ namespace AxisOrange {
             isListening = false;
         }
 
-        async void SerialRecieveLoop() {
+        void SerialRecieveLoop() {
             SerialHeader header = default;
             AxisOrangeData data = default;
             AxisOrangeButton button = default;
@@ -70,7 +70,7 @@ namespace AxisOrange {
                 }
                 // finish loop?
                 if (isListening) {
-                    await Task.Delay(1);
+                    System.Threading.Thread.Sleep(1);
                 } else {
                     break;
                 }

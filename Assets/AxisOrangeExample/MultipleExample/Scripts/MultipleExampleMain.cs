@@ -11,6 +11,7 @@ namespace AxisOrangeExample {
             var plugin = AxisOrangePlugin.Instance;
             foreach (var v in sensorViews) {
                 ISensorPresenter presenter = new SensorPresenter(v);
+                CompositeDisposable disposables = default;
                 presenter
                     .AddButtonClickObservable
                     .Subscribe(_ => {
@@ -24,36 +25,45 @@ namespace AxisOrangeExample {
                         presenter.SetComPortText($"COM{id}");
                         presenter.SetButtonAAppeared(false);
                         presenter.SetButtonBAppeared(false);
+                        disposables = new CompositeDisposable();
                         plugin.SensorDataUpdateEventFilterBy(id)
                             .Subscribe(x => {
                                 presenter.SetM5StickCRotation(x.quaternion);
                             })
-                            .AddTo(this);
+                            .AddTo(disposables);
                         plugin.SensorButtonAPushTriggerObservableFilterBy(id)
                             .Subscribe(x => {
                                 presenter.SetButtonAAppeared(true);
                             })
-                            .AddTo(this);
+                            .AddTo(disposables);
                         plugin.SensorButtonAReleaseTriggerObservableFilterBy(id)
                             .Subscribe(x => {
                                 presenter.SetButtonAAppeared(false);
                             })
-                            .AddTo(this);
+                            .AddTo(disposables);
                         plugin.SensorButtonBPushTriggerObservableFilterBy(id)
                             .Subscribe(x => {
                                 presenter.SetButtonBAppeared(true);
                             })
-                            .AddTo(this);
+                            .AddTo(disposables);
                         plugin.SensorButtonBReleaseTriggerObservableFilterBy(id)
                             .Subscribe(x => {
                                 presenter.SetButtonBAppeared(false);
                             })
-                            .AddTo(this);
+                            .AddTo(disposables);
+                        presenter
+                        .InstallGyroOffsetButtonClickObservable
+                        .Subscribe(__ => {
+                            plugin.InstallGyroOffset(id);
+                        })
+                        .AddTo(disposables);
+
                     })
                     .AddTo(this);
                 presenter
                     .CloseButtonClickObservable
                     .Subscribe(_ => {
+                        disposables?.Dispose();
                         if (!int.TryParse(presenter.GetIdInputText(), out var id)) {
                             return;
                         }

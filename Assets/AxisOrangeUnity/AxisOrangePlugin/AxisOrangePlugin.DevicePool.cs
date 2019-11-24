@@ -23,6 +23,7 @@ namespace AxisOrange {
             sensor.Listen();
             var disposable = new CompositeDisposable();
             SubscriteEvents(sensor, disposable);
+            sensorDict.Add(id, sensor);
             disposables.Add(id, disposable);
             return true;
         }
@@ -49,18 +50,19 @@ namespace AxisOrange {
             }
             sensorDict[id].RequestInstallGyroOfset();
             return true;
-
         }
 
         void SubscriteEvents(IAxisOrangeSensor sensor, CompositeDisposable disposables) {
             sensor
                 .ReactiveSensorData()
+                .ObserveOnMainThread()
                 .Subscribe(x => {
                     SensorDataUpdateEvent.Invoke(sensor.SensorId, new AxisOrangeUnityData(x));
                 })
                 .AddTo(disposables);
             sensor
                 .ReactiveButton()
+                .ObserveOnMainThread()
                 .Subscribe(x => {
                     SensorButtonUpdateEvent.Invoke(sensor.SensorId, x);
                 })

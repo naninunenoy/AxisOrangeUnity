@@ -7,6 +7,7 @@ using UnityEngine;
 namespace AxisOrangeExample {
     public class SensorPresenter : ISensorPresenter {
         readonly ISensorView view;
+        Quaternion baseRotaion = Quaternion.identity;
 
         public SensorPresenter(ISensorView view) { this.view = view; }
 
@@ -32,6 +33,10 @@ namespace AxisOrangeExample {
 
         public void SetButtonAAppeared(bool appeared) {
             view.ButtonAImage.gameObject.SetActive(appeared);
+            // button A で quaternion 初期化
+            if (appeared) {
+                baseRotaion = Quaternion.identity;
+            }
         }
 
         public void SetButtonBAppeared(bool appeared) {
@@ -43,7 +48,11 @@ namespace AxisOrangeExample {
         }
 
         public void SetM5StickCRotation(Quaternion rotation) {
-            view.M5StickC.rotation = rotation;
+            if (baseRotaion == Quaternion.identity) {
+                baseRotaion = rotation;
+                return;
+            }
+            view.M5StickC.rotation = Quaternion.Inverse(baseRotaion) * rotation;
         }
     }
 }
