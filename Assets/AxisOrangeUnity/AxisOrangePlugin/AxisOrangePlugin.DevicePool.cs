@@ -5,7 +5,7 @@ using UniRx;
 
 namespace AxisOrange {
     public partial class AxisOrangePlugin {
-        public event Action<int, AxisOrangeData> SensorDataUpdateEvent = delegate { };
+        public event Action<int, AxisOrangeUnityData> SensorDataUpdateEvent = delegate { };
         public event Action<int, AxisOrangeButton> SensorButtonUpdateEvent = delegate { };
 
         static readonly IDictionary<int, IAxisOrangeSensor> sensorDict;
@@ -56,7 +56,7 @@ namespace AxisOrange {
             sensor
                 .ReactiveSensorData()
                 .Subscribe(x => {
-                    SensorDataUpdateEvent.Invoke(sensor.SensorId, x);
+                    SensorDataUpdateEvent.Invoke(sensor.SensorId, new AxisOrangeUnityData(x));
                 })
                 .AddTo(disposables);
             sensor

@@ -24,35 +24,27 @@ namespace AxisOrangeExample {
                         presenter.SetComPortText($"COM{id}");
                         presenter.SetButtonAAppeared(false);
                         presenter.SetButtonBAppeared(false);
-                        Observable
-                            .FromEvent<Action<int, AxisOrangeData>, AxisOrangeUnityData>(
-                                h => (i, x) => { if (i == id) { h.Invoke(new AxisOrangeUnityData(x)); } },
-                                h => plugin.SensorDataUpdateEvent += h,
-                                h => plugin.SensorDataUpdateEvent -= h)
+                        plugin.SensorDataUpdateEventFilterBy(id)
                             .Subscribe(x => {
                                 presenter.SetM5StickCRotation(x.quaternion);
                             })
                             .AddTo(this);
-                        var btn = Observable.FromEvent<Action<int, AxisOrangeButton>, AxisOrangeButton>(
-                            h => (i, x) => { if (i == id) { h.Invoke(x); } },
-                            h => plugin.SensorButtonUpdateEvent += h,
-                            h => plugin.SensorButtonUpdateEvent -= h);
-                        btn.ButtonAPushTriggerObservable()
+                        plugin.SensorButtonAPushTriggerObservableFilterBy(id)
                             .Subscribe(x => {
                                 presenter.SetButtonAAppeared(true);
                             })
                             .AddTo(this);
-                        btn.ButtonAReleaseTriggerObservable()
+                        plugin.SensorButtonAReleaseTriggerObservableFilterBy(id)
                             .Subscribe(x => {
                                 presenter.SetButtonAAppeared(false);
                             })
                             .AddTo(this);
-                        btn.ButtonBPushTriggerObservable()
+                        plugin.SensorButtonBPushTriggerObservableFilterBy(id)
                             .Subscribe(x => {
                                 presenter.SetButtonBAppeared(true);
                             })
                             .AddTo(this);
-                        btn.ButtonBReleaseTriggerObservable()
+                        plugin.SensorButtonBReleaseTriggerObservableFilterBy(id)
                             .Subscribe(x => {
                                 presenter.SetButtonBAppeared(false);
                             })

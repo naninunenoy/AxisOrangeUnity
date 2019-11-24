@@ -72,5 +72,43 @@ namespace AxisOrange {
                 .Where(x => x.Previous.buttonB == ButtonState.Push && x.Current.buttonB == ButtonState.Release)
                 .Select(_ => Unit.Default);
         }
+        public static IReadOnlyReactiveProperty<AxisOrangeUnityData> SensorDataUpdateEventFilterBy(this AxisOrangePlugin plugin, int id) {
+            return Observable
+                .FromEvent<Action<int, AxisOrangeUnityData>, AxisOrangeUnityData>(
+                    h => (i, x) => { if (i == id) { h.Invoke(x); } },
+                    h => plugin.SensorDataUpdateEvent += h,
+                    h => plugin.SensorDataUpdateEvent -= h)
+                .ToReadOnlyReactiveProperty();
+        }
+        public static IReadOnlyReactiveProperty<AxisOrangeButton> SensorButtonUpdateEventFilterBy(this AxisOrangePlugin plugin, int id) {
+            return Observable
+                .FromEvent<Action<int, AxisOrangeButton>, AxisOrangeButton>(
+                    h => (i, x) => { if (i == id) { h.Invoke(x); } },
+                    h => plugin.SensorButtonUpdateEvent += h,
+                    h => plugin.SensorButtonUpdateEvent -= h)
+                .ToReadOnlyReactiveProperty();
+        }
+        public static IObservable<Unit> SensorButtonAPushTriggerObservableFilterBy(this AxisOrangePlugin plugin, int id) {
+            return plugin
+                .SensorButtonUpdateEventFilterBy(id)
+                .ButtonAPushTriggerObservable();
+
+        }
+        public static IObservable<Unit> SensorButtonAReleaseTriggerObservableFilterBy(this AxisOrangePlugin plugin, int id) {
+            return plugin
+                .SensorButtonUpdateEventFilterBy(id)
+                .ButtonAReleaseTriggerObservable();
+
+        }
+        public static IObservable<Unit> SensorButtonBPushTriggerObservableFilterBy(this AxisOrangePlugin plugin, int id) {
+            return plugin
+                .SensorButtonUpdateEventFilterBy(id)
+                .ButtonBPushTriggerObservable();
+        }
+        public static IObservable<Unit> SensorButtonBReleaseTriggerObservableFilterBy(this AxisOrangePlugin plugin, int id) {
+            return plugin
+                .SensorButtonUpdateEventFilterBy(id)
+                .ButtonBReleaseTriggerObservable();
+        }
     }
 }
