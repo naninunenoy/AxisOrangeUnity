@@ -1,7 +1,8 @@
 {
     "name": "AxisOrangeUnity",
     "references": [
-        "GUID:918dc53cfbfd714429f66062b47c2a02"
+        "GUID:918dc53cfbfd714429f66062b47c2a02",
+        "GUID:560b04d1a97f54a4e82edc0cbbb69285"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],
