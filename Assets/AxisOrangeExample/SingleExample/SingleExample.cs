@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using AxisOrange;
 
 namespace AxisOrangeExample {
-    public class AxisOrangeExample : MonoBehaviour {
+    public class SingleExample : MonoBehaviour {
         [SerializeField] int serialPortNo = 0;
         [SerializeField] Transform m5stickC = default;
 

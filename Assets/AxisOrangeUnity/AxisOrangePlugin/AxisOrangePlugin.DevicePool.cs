@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UniRx;
 
 namespace AxisOrange {
@@ -10,6 +11,8 @@ namespace AxisOrange {
         static readonly IDictionary<int, IAxisOrangeSensor> sensorDict;
         static readonly IDictionary<int, CompositeDisposable> disposables;
         static readonly IAxisOrangeFactory factory;
+
+        public IEnumerable<int> SensorIds => sensorDict.Select(x => x.Key);
 
         public bool CreateAxisOrange(int id) {
             var sensor = factory.CreateWithId(id);
