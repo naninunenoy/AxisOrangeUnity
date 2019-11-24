@@ -38,7 +38,7 @@ namespace AxisOrangeExample {
             }
         }
 
-        void UpdateQuaternion(AxisOrangeDataData data) {
+        void UpdateQuaternion(AxisOrangeData data) {
             var unityData = new AxisOrangeUnityData(data);
             if (baseQuaternion == Quaternion.identity) {
                 baseQuaternion = unityData.quaternion;
