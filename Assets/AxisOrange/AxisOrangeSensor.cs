@@ -6,16 +6,16 @@ namespace AxisOrange {
     public class AxisOrangeSensor : IAxisOrangeSensor {
 
         const int BoudRate = 115200;
-        readonly string portNo;
         readonly SerialPort serialDevice;
         readonly SerialReader serialReader;
+        public int SensorId { get; }
         public event Action<AxisOrangeDataData> OnSensorDataUpdate = delegate { };
         public event Action<AxisOrangeButton> OnSensorButtonUpdate = delegate { };
         bool isListening = false;
 
         public AxisOrangeSensor(int portNo) {
-            this.portNo = $"COM{portNo}";
-            serialDevice = new SerialPort(this.portNo, BoudRate);
+            SensorId = portNo;
+            serialDevice = new SerialPort($"COM{portNo}", BoudRate);
             serialReader = new SerialReader();
         }
 
