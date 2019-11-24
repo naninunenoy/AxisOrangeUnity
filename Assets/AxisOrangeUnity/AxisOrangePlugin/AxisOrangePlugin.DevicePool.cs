@@ -5,8 +5,8 @@ using UniRx;
 
 namespace AxisOrange {
     public partial class AxisOrangePlugin {
-        public static event Action<int, AxisOrangeData> SensorDataUpdateEvent = delegate { };
-        public static event Action<int, AxisOrangeButton> SensorButtonUpdateEvent = delegate { };
+        public event Action<int, AxisOrangeData> SensorDataUpdateEvent = delegate { };
+        public event Action<int, AxisOrangeButton> SensorButtonUpdateEvent = delegate { };
 
         static readonly IDictionary<int, IAxisOrangeSensor> sensorDict;
         static readonly IDictionary<int, CompositeDisposable> disposables;

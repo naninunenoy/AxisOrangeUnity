@@ -3,14 +3,14 @@
 // thanks to https://gist.github.com/mao-test-h/4f5205bc22cdadaa1f01d9b286c48a56
 
 namespace AxisOrange {
-    public partial class MonoAxisOrangePlugin : MonoBehaviour {
-        static MonoAxisOrangePlugin instance;
-        public static MonoAxisOrangePlugin Instance {
+    public partial class AxisOrangePlugin : MonoBehaviour {
+        static AxisOrangePlugin instance;
+        public static AxisOrangePlugin Instance {
             get {
                 if (instance == null) {
-                    instance = FindObjectOfType(typeof(MonoAxisOrangePlugin)) as MonoAxisOrangePlugin;
+                    instance = FindObjectOfType(typeof(AxisOrangePlugin)) as AxisOrangePlugin;
                     if ((instance == null)) {
-                        Debug.LogWarning(typeof(MonoAxisOrangePlugin) + " is nothing");
+                        Debug.LogWarning(typeof(AxisOrangePlugin) + " is nothing");
                     }
                 }
                 return instance;

@@ -952,7 +952,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8398951255535197799
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1220,6 +1220,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8398951255747742731}
+  - component: {fileID: 5428993547453092029}
   m_Layer: 5
   m_Name: SensorView
   m_TagString: Untagged
@@ -1248,6 +1249,28 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 190, y: 140}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5428993547453092029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8398951255747742740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0cf7c3b3a2dd934f91f3d4dcd3f4c18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  emptyView: {fileID: 8398951255535197799}
+  idInput: {fileID: 8398951255472580056}
+  addButton: {fileID: 8398951254586711880}
+  contentView: {fileID: 8398951256055673221}
+  closeButton: {fileID: 8398951254588078836}
+  installGyroOffsetButton: {fileID: 8398951255582739419}
+  comPortText: {fileID: 636068308989552264}
+  buttonAImage: {fileID: 8398951255470053404}
+  buttonBImage: {fileID: 8398951256100779113}
+  m5StickC: {fileID: 4274985567897242513}
 --- !u!1 &8398951256037852000
 GameObject:
   m_ObjectHideFlags: 0
