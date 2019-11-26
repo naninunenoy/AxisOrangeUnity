@@ -55,7 +55,8 @@ namespace AxisOrange {
             AxisOrangeButton button = default;
             while (serialDevice.IsNotNullAndOpened()) {
                 // serial read
-                if (serialReader.TryReadSerialHeader(serialDevice, ref header)) {
+                if (serialDevice.BytesToRead >= SerialHeaderDef.HeaderLength && 
+                    serialReader.TryReadSerialHeader(serialDevice, ref header)) {
                     if (header.dataId == SerialHeaderDef.ImuDataId) {
                         if (serialReader.TryReadImuData(serialDevice, header.dataLength, ref data)) {
                             OnSensorDataUpdate.Invoke(data);
@@ -70,12 +71,14 @@ namespace AxisOrange {
                 }
                 // finish loop?
                 if (isListening) {
-                    System.Threading.Thread.Sleep(1);
+                    serialDevice.DiscardInBuffer();
+                    System.Threading.Thread.Sleep(15);
                 } else {
                     break;
                 }
             }
         }
+
         public void RequestInstallGyroOfset() {
             serialDevice.Write(RequestId.InstallGyroOffset.ToRequestSerialHeaderBytes(), 0, SerialHeaderDef.HeaderLength);
         }
