@@ -71,8 +71,7 @@ namespace AxisOrange {
                 }
                 // finish loop?
                 if (isListening) {
-                    serialDevice.DiscardInBuffer();
-                    System.Threading.Thread.Sleep(15);
+                    System.Threading.Thread.Sleep(1);
                 } else {
                     break;
                 }
