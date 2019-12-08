@@ -20,10 +20,12 @@ namespace AxisOrangeExample {
         public Transform EmptyView => emptyView;
         public InputField IdInput => idInput;
         public Button AddButton => addButton;
+        public Button StartButton => startButton;
         public Transform ContentView => contentView;
         public Button CloseButton => closeButton;
         public Button InstallGyroOffsetButton => installGyroOffsetButton;
         public Text ComPortText => comPortText;
+        public Text StartButtonText => startButtonText;
         public Image ButtonAImage => buttonAImage;
         public Image ButtonBImage => buttonBImage;
         public Transform M5StickC => m5StickC;

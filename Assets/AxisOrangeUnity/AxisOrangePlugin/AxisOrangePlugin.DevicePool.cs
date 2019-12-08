@@ -20,26 +20,43 @@ namespace AxisOrange {
                 return false;
             }
             sensor.Open();
+            sensorDict.Add(id, sensor);
+            return true;
+        }
+
+        public bool ListenUpdate(int id) {
+            if (!sensorDict.ContainsKey(id)) {
+                return false;
+            }
+            if (disposables.ContainsKey(id)) {
+                return false; // already contains
+            }
+            var sensor = sensorDict[id];
             sensor.Listen();
             var disposable = new CompositeDisposable();
             SubscriteEvents(sensor, disposable);
-            sensorDict.Add(id, sensor);
             disposables.Add(id, disposable);
             return true;
+        }
+
+        public bool UnlistenUpdate(int id) {
+            if (disposables.ContainsKey(id)) {
+                disposables[id].Dispose();
+                disposables.Remove(id);
+                var sensor = sensorDict[id];
+                sensor.Unlisten();
+                return true;
+            }
+            return false;
         }
 
         public bool DeleteAxisOrange(int id) {
             if (!sensorDict.ContainsKey(id)) {
                 return false;
             }
-            // dispose
-            if (disposables.ContainsKey(id)) {
-                disposables[id].Dispose();
-                disposables.Remove(id);
-            }
             var sensor = sensorDict[id];
-            sensor.Unlisten();
             sensor.Close();
+            UnlistenUpdate(id);
             sensorDict.Remove(id);
             return true;
         }

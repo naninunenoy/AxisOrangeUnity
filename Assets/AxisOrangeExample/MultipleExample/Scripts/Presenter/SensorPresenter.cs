@@ -12,10 +12,11 @@ namespace AxisOrangeExample {
         public SensorPresenter(ISensorView view) { this.view = view; }
 
         public IObservable<Unit> AddButtonClickObservable => view.AddButton.OnClickAsObservable();
-
         public IObservable<Unit> CloseButtonClickObservable => view.CloseButton.OnClickAsObservable();
+        public IObservable<Unit> StartButtonClickObservable => view.StartButton.OnClickAsObservable();
 
         public IObservable<Unit> InstallGyroOffsetButtonClickObservable => view.InstallGyroOffsetButton.OnClickAsObservable();
+
 
         public string GetIdInputText() {
             return view.IdInput.text;
@@ -29,6 +30,10 @@ namespace AxisOrangeExample {
         public void OpenSensorView() {
             view.ContentView.gameObject.SetActive(true);
             view.EmptyView.gameObject.SetActive(false);
+        }
+
+        public void SetStartButtonText(string text) {
+            view.StartButtonText.text = text;
         }
 
         public void SetButtonAAppeared(bool appeared) {
