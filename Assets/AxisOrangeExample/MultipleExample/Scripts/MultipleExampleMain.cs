@@ -52,11 +52,11 @@ namespace AxisOrangeExample {
                             })
                             .AddTo(disposables);
                         presenter
-                        .InstallGyroOffsetButtonClickObservable
-                        .Subscribe(__ => {
-                            plugin.InstallGyroOffset(id);
-                        })
-                        .AddTo(disposables);
+                            .InstallGyroOffsetButtonClickObservable
+                            .Subscribe(__ => {
+                                plugin.InstallGyroOffset(id);
+                            })
+                            .AddTo(disposables);
 
                     })
                     .AddTo(this);

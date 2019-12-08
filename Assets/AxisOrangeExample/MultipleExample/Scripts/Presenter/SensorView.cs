@@ -8,9 +8,11 @@ namespace AxisOrangeExample {
         [SerializeField] Button addButton = default;
 
         [SerializeField] Transform contentView = default;
+        [SerializeField] Button startButton = default;
         [SerializeField] Button closeButton = default;
         [SerializeField] Button installGyroOffsetButton = default;
         [SerializeField] Text comPortText = default;
+        [SerializeField] Text startButtonText = default;
         [SerializeField] Image buttonAImage = default;
         [SerializeField] Image buttonBImage = default;
         [SerializeField] Transform m5StickC = default;
