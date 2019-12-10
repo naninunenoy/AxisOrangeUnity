@@ -1,8 +1,8 @@
 {
-    "name": "dev.naninunenoy.orangeaxis",
-    "displayName": "OrangeAxis",
-    "description": "OrangeAxis unity plugin",
-    "version": "0.1.0",
+    "name": "dev.naninunenoy.axisorange",
+    "displayName": "AxisOrange",
+    "description": "AxisOrange unity plugin",
+    "version": "0.1",
     "unity": "2017.1",
     "dependencies": {}
 }
