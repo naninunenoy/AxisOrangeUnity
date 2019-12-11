@@ -9,6 +9,9 @@ AxisOrangeUnity
 
 Demo of applying quaternion from M5StickC.
 
+## Dependency
+ * [UniRx](https://assetstore.unity.com/packages/tools/integration/unirx-reactive-extensions-for-unity-17276)
+
 ## License
 MIT
 
